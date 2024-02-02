@@ -1,0 +1,8 @@
+# python virtual environment
+.venv/
+venv/
+.env/
+env/
+
+# test input files
+inputs/
