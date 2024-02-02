@@ -1,5 +1,8 @@
 FROM apache/airflow:2.8.1
 
+# install necessary packages
+RUN pip install apache-airflow-providers-amazon pandas plotly
+
 # migrate database
 RUN airflow db init
 
