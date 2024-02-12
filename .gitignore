@@ -6,3 +6,9 @@ env/
 
 # test input files
 inputs/
+
+# build assets
+**/build/
+**/dist/
+**/**.egg
+**/**.egg-info

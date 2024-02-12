@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  spark-master:
+    container_name: spark_master
+    build:
+      context: .docker/
+      dockerfile: spark.Dockerfile
+    ports:
+      - "9090:8080"
+      - "7077:7077"
+    volumes:
+       - ./spark/apps:/opt/spark-apps
+       - ./spark/data:/opt/spark-data
+    environment:
+      - SPARK_LOCAL_IP=spark-master
+      - SPARK_WORKLOAD=master
+    networks:
+      - spark-airflow
+  
+  spark-worker-01:
+    container_name: spark_worker_01
+    build:
+      context: .docker/
+      dockerfile: spark.Dockerfile
+    ports:
+      - "9091:8080"
+      - "7000:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-01
+    volumes:
+       - ./spark/apps:/opt/spark-apps
+       - ./spark/data:/opt/spark-data
+    networks:
+      - spark-airflow
+
+  spark-worker-02:
+    container_name: spark_worker_02
+    build:
+      context: .docker/
+      dockerfile: spark.Dockerfile
+    ports:
+      - "9092:8080"
+      - "7001:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-02
+    volumes:
+       - ./spark/apps:/opt/spark-apps
+       - ./spark/data:/opt/spark-data
+    networks:
+      - spark-airflow
+
+networks:
+  spark-airflow:
+    external: true
