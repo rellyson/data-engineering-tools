@@ -12,3 +12,6 @@ inputs/
 **/dist/
 **/**.egg
 **/**.egg-info
+
+# jupyter notebooks
+**/.ipynb_checkpoints
