@@ -4,8 +4,7 @@ services:
   spark-master:
     container_name: spark_master
     build:
-      context: .docker/
-      dockerfile: spark.Dockerfile
+      context: .
     ports:
       - "9090:8080"
       - "7077:7077"
@@ -16,13 +15,12 @@ services:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master
     networks:
-      - spark-airflow
+      - data-eng-network
   
   spark-worker-01:
     container_name: spark_worker_01
     build:
-      context: .docker/
-      dockerfile: spark.Dockerfile
+      context: .
     ports:
       - "9091:8080"
       - "7000:7000"
@@ -40,13 +38,12 @@ services:
        - ./spark/apps:/opt/spark-apps
        - ./spark/data:/opt/spark-data
     networks:
-      - spark-airflow
+      - data-eng-network
 
   spark-worker-02:
     container_name: spark_worker_02
     build:
-      context: .docker/
-      dockerfile: spark.Dockerfile
+      context: .
     ports:
       - "9092:8080"
       - "7001:7000"
@@ -64,8 +61,8 @@ services:
        - ./spark/apps:/opt/spark-apps
        - ./spark/data:/opt/spark-data
     networks:
-      - spark-airflow
+      - data-eng-network
 
 networks:
-  spark-airflow:
+  data-eng-network:
     external: true

@@ -4,15 +4,14 @@ services:
   airflow:
     container_name: airflow_standalone
     build:
-      context: .docker/
-      dockerfile: airflow.Dockerfile
+      context: .
     ports:
       - 8080:8080
     volumes:
       - ./dags/:/opt/airflow/dags/
     command: "standalone"
     networks:
-      - spark-airflow
+      - data-eng-network
 
   localstack:
     image: localstack/localstack:latest
@@ -25,8 +24,8 @@ services:
     volumes:
         - "/var/run/docker.sock:/var/run/docker.sock"
     networks:
-      - spark-airflow
+      - data-eng-network
 
 networks:
-  spark-airflow:
+  data-eng-network:
     external: true
