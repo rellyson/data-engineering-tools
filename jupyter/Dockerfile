@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/pyspark-notebook
+FROM quay.io/jupyter/minimal-notebook
 
 # Install requirements
 COPY requirements.txt .

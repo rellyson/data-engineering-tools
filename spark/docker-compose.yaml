@@ -8,9 +8,6 @@ services:
     ports:
       - "9090:8080"
       - "7077:7077"
-    volumes:
-       - ./spark/apps:/opt/spark-apps
-       - ./spark/data:/opt/spark-data
     environment:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master
@@ -34,9 +31,6 @@ services:
       - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-01
-    volumes:
-       - ./spark/apps:/opt/spark-apps
-       - ./spark/data:/opt/spark-data
     networks:
       - data-eng-network
 
@@ -57,9 +51,6 @@ services:
       - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-02
-    volumes:
-       - ./spark/apps:/opt/spark-apps
-       - ./spark/data:/opt/spark-data
     networks:
       - data-eng-network
 
